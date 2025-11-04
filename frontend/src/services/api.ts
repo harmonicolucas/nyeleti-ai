@@ -44,6 +44,7 @@ export interface Meta {
 }
 
 const BASE = import.meta.env.VITE_API_URL ?? "";
+const STATIC_API = import.meta.env.VITE_STATIC_API === "1";
 const cache = new Map<string, Promise<unknown>>();
 
 export type Params = Record<string, string | number | boolean | null | undefined>;
@@ -52,7 +53,19 @@ export function selectionParams(sel: Selection): Params {
   return sel.kind === "area" ? { area_id: sel.areaId } : { aoi: JSON.stringify(sel.geometry) };
 }
 
+function staticApiPath(path: string, params: Params = {}): string {
+  const items = Object.entries(params)
+    .filter(([, value]) => value !== null && value !== undefined && value !== "")
+    .map(([key, value]) => [key, String(value)] as const)
+    .sort(([a], [b]) => a.localeCompare(b));
+  const query = items.map(([key, value]) => `${key}=${value}`).join("&");
+  const raw = `${path.replace(/^\//, "")}${query ? `__${query}` : ""}`;
+  const safe = raw.replace(/[^\w.=\/-]+/g, "_");
+  return `${import.meta.env.BASE_URL}static-api/${safe}.json`;
+}
+
 export function buildUrl(path: string, params: Params = {}): string {
+  if (STATIC_API && path.startsWith("/api/")) return staticApiPath(path, params);
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
     if (value !== null && value !== undefined && value !== "") query.set(key, String(value));

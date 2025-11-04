@@ -124,12 +124,14 @@ export default function App() {
       <div className="splash">
         <div>
           <h1>NYELETI AI</h1>
-          <p>The API is not reachable or the database has not been built yet.</p>
+          <p>The API is not reachable for this view, or the local database has not been built yet.</p>
           <p>{error}</p>
           <code>
             python -m scripts.run_pipeline
             <br />
             uvicorn backend.app.main:app --port 8000
+            <br />
+            Public demo: https://harmonicolucas.github.io/nyeleti-ai/app/
           </code>
         </div>
       </div>
