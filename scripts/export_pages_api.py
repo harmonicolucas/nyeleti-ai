@@ -86,7 +86,7 @@ def main() -> None:
             "min_days": 3, "max_gap": 1, "basis": "area",
         })
 
-    # dashboard is independent of metric — saved once above; keep one call only next time
+    # dashboard is independent of metric - saved once above; keep one call only next time
     save("/api/critical/regions", {"level": "ADM1"})
     save("/api/critical/regions", {"level": "ADM2"})
 

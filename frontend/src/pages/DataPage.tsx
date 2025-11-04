@@ -34,8 +34,8 @@ export function DataPage() {
               {Object.entries(quality).map(([name, q]) => (
                 <tr key={name}>
                   <td className="left">{SENSOR_NAMES[name] ?? name}</td>
-                  <td className="left">{meta.files.find((f) => f.sensor === name)?.product ?? "–"}</td>
-                  <td>{q.first_year}–{q.last_year}</td>
+                  <td className="left">{meta.files.find((f) => f.sensor === name)?.product ?? "-"}</td>
+                  <td>{q.first_year}-{q.last_year}</td>
                   <td>{q.files}</td>
                   <td>{fmt(q.raw_records)}</td>
                   <td>{fmt(q.rejected)}</td>
@@ -58,7 +58,7 @@ export function DataPage() {
             <dt>{t("data.country")}</dt><dd>{meta.country} ({meta.iso3})</dd>
             <dt>{t("data.period")}</dt><dd>{meta.record.first_day} → {meta.record.last_day}</dd>
             <dt>{t("data.viirsStart")}</dt><dd>{meta.record.viirs_start}</dd>
-            <dt>{t("data.noaaStart")}</dt><dd>{meta.record.noaa20_start ?? "–"}</dd>
+            <dt>{t("data.noaaStart")}</dt><dd>{meta.record.noaa20_start ?? "-"}</dd>
             <dt>{t("data.fullModis")}</dt><dd>{meta.record.analysis_first_year}</dd>
             <dt>{t("data.grid")}</dt><dd>{meta.grid.cell_km} km · {meta.grid.crs}</dd>
             <dt>{t("data.built")}</dt><dd>{meta.built_at}</dd>

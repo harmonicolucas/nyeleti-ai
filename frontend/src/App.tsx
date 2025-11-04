@@ -67,7 +67,7 @@ function Shell() {
         </nav>
         <div className="sidebar-foot">
           {t("dataFrom")} NASA FIRMS<br />
-          {meta.record.first_day.slice(0, 4)}–{meta.record.last_day.slice(0, 4)} · {meta.grid.cell_km} km<br />
+          {meta.record.first_day.slice(0, 4)}-{meta.record.last_day.slice(0, 4)} · {meta.grid.cell_km} km<br />
           {t("model")}: <code>{meta.active_model}</code>
         </div>
       </aside>

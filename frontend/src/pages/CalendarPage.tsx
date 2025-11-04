@@ -157,7 +157,7 @@ function DayView(props: { source: Source; initialYear: number | null }) {
             </Field>
             <Field label={t("calendar.compareWith")}>
               <select value={other} onChange={(e) => setOther(e.target.value ? Number(e.target.value) : "")}>
-                <option value="">–</option>
+                <option value="">-</option>
                 {years.filter((y) => y !== year).map((y) => <option key={y} value={y}>{y}</option>)}
               </select>
             </Field>
@@ -200,7 +200,7 @@ function DayView(props: { source: Source; initialYear: number | null }) {
               <dt>{t("src.harmonized")}</dt>
               <dd>{fmt(detail.harmonized, 1)} {unit} <span className="tag estimate">{t("estimate")}</span></dd>
               <dt>{t("calendar.class")}</dt>
-              <dd>{detail.cls ? t(`cls.${detail.cls}`) : "–"}</dd>
+              <dd>{detail.cls ? t(`cls.${detail.cls}`) : "-"}</dd>
               <dt>{t("nav.anomalies")}</dt>
               <dd>
                 {detail.anomaly ? (
@@ -339,9 +339,9 @@ function YearView(props: { onOpenYear: (y: number) => void }) {
                       <tr key={d.years[i]} className="clickable" onClick={() => props.onOpenYear(d.years[i])}>
                         <td className="left">{d.years[i]}{d.modis_full_coverage[i] ? "" : " *"}</td>
                         <td>{fmt(d.series.modis[i], 0)}</td>
-                        <td>{d.series.viirs[i] === null ? "–" : `${fmt(d.series.viirs[i], 0)}${d.viirs_complete[i] ? "" : " †"}`}</td>
+                        <td>{d.series.viirs[i] === null ? "-" : `${fmt(d.series.viirs[i], 0)}${d.viirs_complete[i] ? "" : " †"}`}</td>
                         <td>{fmt(d.series.harmonized[i], 0)}</td>
-                        <td>{d.classes[i] ? <span className={`tag cls-${d.classes[i]}`}>{t(`cls.${d.classes[i]}`)}</span> : "–"}</td>
+                        <td>{d.classes[i] ? <span className={`tag cls-${d.classes[i]}`}>{t(`cls.${d.classes[i]}`)}</span> : "-"}</td>
                         <td className="left">{d.split[i] ? t(`split.${d.split[i]}`) : t("split.none")}</td>
                       </tr>
                     );

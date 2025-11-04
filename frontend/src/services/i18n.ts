@@ -3,7 +3,7 @@ export type Lang = "en" | "pt";
 type Dict = Record<string, string>;
 
 const en: Dict = {
-  tagline: "MODIS–VIIRS fire data harmonization and burning activity calendar",
+  tagline: "MODIS-VIIRS fire data harmonization and burning activity calendar",
   "nav.dashboard": "Dashboard",
   "nav.map": "Map",
   "nav.calendar": "Burning calendar",
@@ -169,7 +169,7 @@ const en: Dict = {
   "engine.step1Text": "MODIS C6.1 and VIIRS 375 m standard products",
   "engine.step2": "Common grid",
   "engine.step2Text": "{km} km equal-area cells, daily",
-  "engine.step3": "MODIS–VIIRS pairs",
+  "engine.step3": "MODIS-VIIRS pairs",
   "engine.step3Text": "same cell, same day, from 2012",
   "engine.step4": "LightGBM",
   "engine.step4Text": "predicts VIIRS count and FRP from MODIS",
@@ -283,7 +283,7 @@ const en: Dict = {
   "critical.daysAbove": "Days above threshold",
   "critical.longest": "Longest period (days)",
   "critical.seasonality": "Seasonality",
-  "critical.range": "Min–max of the month",
+  "critical.range": "Min-max of the month",
   "critical.monthMean": "Monthly mean",
   "critical.daysAbovePerYear": "Days above per year",
   "critical.peakNote": "Peak month: {peak}. {top} hold {share}% of the mean annual activity.",
@@ -295,7 +295,7 @@ const en: Dict = {
   "critical.timingSub": "dates by which 10%, 50% and 90% of the year's activity occurred",
   "critical.core": "10% → 90% of annual activity",
   "critical.midpoint": "50%",
-  "critical.trend": "Annual trend {first}–{last}: {pct}% per decade (Theil–Sen), Kendall tau {tau}, p = {p}.",
+  "critical.trend": "Annual trend {first}-{last}: {pct}% per decade (Theil-Sen), Kendall tau {tau}, p = {p}.",
   "critical.trendSig": "Statistically significant at the 5% level.",
   "critical.trendNotSig": "Not statistically significant at the 5% level.",
   "critical.regions": "Recurrent regions",
@@ -367,7 +367,7 @@ const en: Dict = {
 };
 
 const pt: Dict = {
-  tagline: "Harmonização de dados de fogo MODIS–VIIRS e calendário de actividade de queimadas",
+  tagline: "Harmonização de dados de fogo MODIS-VIIRS e calendário de actividade de queimadas",
   "nav.dashboard": "Painel",
   "nav.map": "Mapa",
   "nav.calendar": "Calendário de queimadas",
@@ -533,7 +533,7 @@ const pt: Dict = {
   "engine.step1Text": "produtos padrão MODIS C6.1 e VIIRS 375 m",
   "engine.step2": "Grelha comum",
   "engine.step2Text": "células de {km} km de área igual, diárias",
-  "engine.step3": "Pares MODIS–VIIRS",
+  "engine.step3": "Pares MODIS-VIIRS",
   "engine.step3Text": "mesma célula, mesmo dia, desde 2012",
   "engine.step4": "LightGBM",
   "engine.step4Text": "prevê contagem e FRP do VIIRS a partir do MODIS",
@@ -647,7 +647,7 @@ const pt: Dict = {
   "critical.daysAbove": "Dias acima do limiar",
   "critical.longest": "Período mais longo (dias)",
   "critical.seasonality": "Sazonalidade",
-  "critical.range": "Mín–máx do mês",
+  "critical.range": "Mín-máx do mês",
   "critical.monthMean": "Média mensal",
   "critical.daysAbovePerYear": "Dias acima por ano",
   "critical.peakNote": "Mês de pico: {peak}. {top} concentram {share}% da actividade anual média.",
@@ -659,7 +659,7 @@ const pt: Dict = {
   "critical.timingSub": "datas em que se atingiram 10%, 50% e 90% da actividade do ano",
   "critical.core": "10% → 90% da actividade anual",
   "critical.midpoint": "50%",
-  "critical.trend": "Tendência anual {first}–{last}: {pct}% por década (Theil–Sen), tau de Kendall {tau}, p = {p}.",
+  "critical.trend": "Tendência anual {first}-{last}: {pct}% por década (Theil-Sen), tau de Kendall {tau}, p = {p}.",
   "critical.trendSig": "Estatisticamente significativa ao nível de 5%.",
   "critical.trendNotSig": "Não é estatisticamente significativa ao nível de 5%.",
   "critical.regions": "Regiões recorrentes",

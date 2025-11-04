@@ -259,7 +259,7 @@ export function AnomaliesPage() {
                       <td>{a.high_days}</td>
                       <td>{a.extreme_days}</td>
                       <td>{signed(a.max_pct_vs_reference)}</td>
-                      <td>{a.peak_date ?? "–"}</td>
+                      <td>{a.peak_date ?? "-"}</td>
                     </tr>
                   ))}
                 </tbody>

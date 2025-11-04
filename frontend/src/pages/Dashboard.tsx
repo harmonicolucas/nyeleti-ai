@@ -129,7 +129,7 @@ export function Dashboard() {
                 extra={<>MODIS · VIIRS: {fmtCompact(d.observed.viirs_frp_mw)} MW<br />{t("kpi.frpNote")}</>} />
               <Kpi label={t("kpi.highDays")} value={fmt(d.high_activity.days)}
                 extra={t("kpi.highDaysExtra", { mean: fmt(d.high_activity.mean_days_per_year, 1) })} />
-              <Kpi label={t("kpi.anomalies")} value={d.anomalies ? fmt(d.anomalies.events) : "–"}
+              <Kpi label={t("kpi.anomalies")} value={d.anomalies ? fmt(d.anomalies.events) : "-"}
                 extra={d.anomalies ? t("kpi.anomaliesExtra", { days: d.anomalies.flagged_days }) : t("kpi.noAnomalyModel")} />
             </div>
             <p className="note">{t("dashboard.note", { year: d.year, name: d.selection.name, km2: fmt(d.selection.area_km2) })}</p>

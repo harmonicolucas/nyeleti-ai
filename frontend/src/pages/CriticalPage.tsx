@@ -149,7 +149,7 @@ export function CriticalPage() {
           <Async state={critical} height={280}>{() => <Chart data={yearTraces} layout={yearLayout} height={280} />}</Async>
         </Panel>
         <Panel title={t("critical.seasonality")}
-          sub={trends.data ? `${trends.data.climatology.reference_years.join("–")}` : undefined}>
+          sub={trends.data ? `${trends.data.climatology.reference_years.join("-")}` : undefined}>
           <Async state={trends} height={280}>{() => <Chart data={monthTraces} layout={monthLayout} height={280} />}</Async>
           {trends.data && (
             <p className="note">
@@ -182,7 +182,7 @@ export function CriticalPage() {
                         <td>{p.days}</td>
                         <td>{fmt(p.total, 0)}</td>
                         <td>{p.peak_date}</td>
-                        <td>{p.peak_over_threshold == null ? "–" : `×${fmt(p.peak_over_threshold, 1)}`}</td>
+                        <td>{p.peak_over_threshold == null ? "-" : `×${fmt(p.peak_over_threshold, 1)}`}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -209,7 +209,7 @@ export function CriticalPage() {
 
       <Panel
         title={t("critical.regions")}
-        sub={regions.data ? `${regions.data.years.join("–")}` : undefined}
+        sub={regions.data ? `${regions.data.years.join("-")}` : undefined}
         tools={
           <Segmented label={t("critical.level")} value={level} onChange={setLevel}
             options={[{ value: "ADM2", label: t("district") }, { value: "ADM1", label: t("province") }]} />
@@ -233,7 +233,7 @@ export function CriticalPage() {
                       <tr key={a.area_id} className="clickable"
                         onClick={() => setSelection({ kind: "area", areaId: a.area_id, name: a.name, level })}>
                         <td className="left">{a.name}</td>
-                        {level === "ADM2" && <td className="left">{a.parent_name ?? "–"}</td>}
+                        {level === "ADM2" && <td className="left">{a.parent_name ?? "-"}</td>}
                         <td>{a.hotspot_years} / {d.n_years}</td>
                         <td>{fmt(a.recurrence_pct, 0)}%</td>
                         <td>{fmt(a.mean_density, 1)}</td>

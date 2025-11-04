@@ -199,7 +199,7 @@ export function EnginePage() {
             <Segmented label={t("period")} value={span} onChange={setSpan}
               options={[
                 { value: "overlap", label: t("engine.overlap") },
-                { value: "test", label: `${t("split.test")} ${test[0] === test[1] ? test[0] : test.join("–")}` },
+                { value: "test", label: `${t("split.test")} ${test[0] === test[1] ? test[0] : test.join("-")}` },
                 { value: "all", label: t("engine.fullRecord") },
               ]} />
             <Segmented label={t("reports.frequency")} value={effFreq} onChange={setFreq}
@@ -235,17 +235,17 @@ export function EnginePage() {
                               <td className="left">
                                 {k === "modis_vs_viirs" && (
                                   <span className={`tag ${s === "test" ? "test" : ""}`}>
-                                    {splitName(s)} {meta.split[s].join("–")}
+                                    {splitName(s)} {meta.split[s].join("-")}
                                   </span>
                                 )}
                               </td>
                               <td className="left">{k === "modis_vs_viirs" ? t("src.modis") : t("src.harmonized")}</td>
-                              <td>{m ? fmt(m.n) : "–"}</td>
-                              <td>{m ? fmt(m.mae, digits(m.mae ?? 0)) : "–"}</td>
-                              <td>{m ? fmt(m.rmse, digits(m.rmse ?? 0)) : "–"}</td>
-                              <td>{m ? fmt(m.r2, 3) : "–"}</td>
-                              <td>{m ? signed(m.bias_pct, 1) : "–"}</td>
-                              <td>{m ? fmt(m.spearman, 3) : "–"}</td>
+                              <td>{m ? fmt(m.n) : "-"}</td>
+                              <td>{m ? fmt(m.mae, digits(m.mae ?? 0)) : "-"}</td>
+                              <td>{m ? fmt(m.rmse, digits(m.rmse ?? 0)) : "-"}</td>
+                              <td>{m ? fmt(m.r2, 3) : "-"}</td>
+                              <td>{m ? signed(m.bias_pct, 1) : "-"}</td>
+                              <td>{m ? fmt(m.spearman, 3) : "-"}</td>
                             </tr>
                           );
                         }),
@@ -265,7 +265,7 @@ export function EnginePage() {
           <>
             <div className="grid two">
               <Panel
-                title={t("engine.testMetrics", { years: m.metrics ? [...new Set(m.metrics.test_years)].join("–") : "" })}
+                title={t("engine.testMetrics", { years: m.metrics ? [...new Set(m.metrics.test_years)].join("-") : "" })}
                 sub={t("engine.independent")}
                 tools={
                   <Field label={t("engine.level")}>
@@ -379,7 +379,7 @@ export function EnginePage() {
                   <dt>{t("engine.split")}</dt>
                   <dd>
                     {(["train", "validation", "test"] as const)
-                      .map((s) => `${splitName(s)} ${m.model.split[s][0] === m.model.split[s][1] ? m.model.split[s][0] : m.model.split[s].join("–")}`)
+                      .map((s) => `${splitName(s)} ${m.model.split[s][0] === m.model.split[s][1] ? m.model.split[s][0] : m.model.split[s].join("-")}`)
                       .join(" · ")}
                   </dd>
                   <dt>{t("engine.rows")}</dt>
@@ -401,7 +401,7 @@ export function EnginePage() {
                     </span>
                   ))}
                   <dt>{t("engine.trained")}</dt><dd>{m.created_at}</dd>
-                  <dt>{t("engine.evaluated")}</dt><dd>{m.metrics?.evaluated_at ?? "–"}</dd>
+                  <dt>{t("engine.evaluated")}</dt><dd>{m.metrics?.evaluated_at ?? "-"}</dd>
                   <dt>{t("engine.fingerprint")}</dt><dd><code>{m.model.data_fingerprint}</code></dd>
                   <dt>{t("engine.libraries")}</dt>
                   <dd>{Object.entries(m.model.libraries).map(([k, v]) => `${k} ${v}`).join(" · ")} · seed {m.model.seed}</dd>
@@ -416,13 +416,13 @@ export function EnginePage() {
                 <p className="note">
                   {t("engine.hfaiText", {
                     count: fmt(m.model.hfai.count_ref, 3), frp: fmt(m.model.hfai.frp_ref, 2),
-                    years: m.model.hfai.reference_years.join("–"),
+                    years: m.model.hfai.reference_years.join("-"),
                   })}
                 </p>
                 <p className="note">
                   {t("engine.backgroundText", {
                     block: m.model.background.block_cells * meta.grid.cell_km,
-                    years: m.model.background.fitted_on.join("–"),
+                    years: m.model.background.fitted_on.join("-"),
                   })}
                 </p>
                 <h3 style={{ fontSize: 13, margin: "14px 0 6px" }}>{t("engine.runs")}</h3>
@@ -439,7 +439,7 @@ export function EnginePage() {
                         <tr key={r.run_at}>
                           <td className="left">{r.run_at}</td>
                           <td className="left"><code>{r.model_version}</code></td>
-                          <td>{r.first_year}–{r.last_year}</td>
+                          <td>{r.first_year}-{r.last_year}</td>
                           <td>{fmt(r.cell_days)}</td>
                         </tr>
                       ))}

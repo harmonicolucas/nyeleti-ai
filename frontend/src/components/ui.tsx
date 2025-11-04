@@ -106,12 +106,12 @@ export function ClassLegend(props: { thresholds?: Record<string, number | null> 
 }
 
 export function fmt(value: number | null | undefined, digits = 0): string {
-  if (value === null || value === undefined || Number.isNaN(value)) return "–";
+  if (value === null || value === undefined || Number.isNaN(value)) return "-";
   return value.toLocaleString("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits });
 }
 
 export function fmtCompact(value: number | null | undefined): string {
-  if (value === null || value === undefined || Number.isNaN(value)) return "–";
+  if (value === null || value === undefined || Number.isNaN(value)) return "-";
   const abs = Math.abs(value);
   if (abs >= 1e6) return `${(value / 1e6).toFixed(2)}M`;
   if (abs >= 1e4) return `${(value / 1e3).toFixed(1)}k`;
@@ -119,6 +119,6 @@ export function fmtCompact(value: number | null | undefined): string {
 }
 
 export function signed(value: number | null | undefined, digits = 0, unit = "%"): string {
-  if (value === null || value === undefined || Number.isNaN(value)) return "–";
+  if (value === null || value === undefined || Number.isNaN(value)) return "-";
   return `${value > 0 ? "+" : ""}${fmt(value, digits)}${unit}`;
 }
