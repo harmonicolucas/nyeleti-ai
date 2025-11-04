@@ -74,12 +74,10 @@ def grid_geojson(sel: Selection, start: str, end: str) -> dict:
     est["modis"] = modis.reindex(est.index).fillna(0)
     est["viirs"] = viirs.reindex(est.index).fillna(0)
     est = est[(est["count"] > 0.05) | (est["modis"] > 0) | (est["viirs"] > 0)]
-    if len(est) > MAX_GEOJSON_CELLS:
-        raise HTTPException(
-            status_code=422,
-            detail=f"{len(est):,} cells in this export; choose a smaller area or a shorter period "
-                   f"(limit {MAX_GEOJSON_CELLS:,}).",
-        )
+    cells_before_cap = len(est)
+    truncated = cells_before_cap > MAX_GEOJSON_CELLS
+    if truncated:
+        est = est.sort_values("hfai", ascending=False).head(MAX_GEOJSON_CELLS)
     viirs_available = end >= meta["viirs_start"]
     west, south, east, north = grid.cell_bounds(est["ix"].values, est["iy"].values, meta["cell_km"])
     features = []
@@ -107,6 +105,9 @@ def grid_geojson(sel: Selection, start: str, end: str) -> dict:
             "start": start,
             "end": end,
             "cell_km": meta["cell_km"],
+            "truncated": truncated,
+            "cells_before_cap": int(cells_before_cap),
+            "cell_cap": MAX_GEOJSON_CELLS,
             "crs_of_grid": config.GRID_CRS,
             "model_version": meta["active_model"],
             "note": "Properties ending in _estimate are model output; properties ending in _observed are "
