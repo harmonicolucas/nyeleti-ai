@@ -1,0 +1,54 @@
+{
+  "created_at": "2026-11-15T20:07:57+00:00",
+  "model": "IsolationForest",
+  "params": {
+    "n_estimators": 200,
+    "max_samples": 4096,
+    "random_state": 42
+  },
+  "features": [
+    "log_ratio",
+    "seasonal_rank",
+    "count_log_ratio",
+    "frp_log_ratio",
+    "day_spike",
+    "level"
+  ],
+  "window_days": 15,
+  "smooth_days": 7,
+  "severity_quantiles": {
+    "moderate": 0.98,
+    "high": 0.995,
+    "extreme": 0.999
+  },
+  "thresholds": {
+    "ADM0": {
+      "moderate": 0.5018355819482475,
+      "high": 0.534083477073223,
+      "extreme": 0.564086217575236
+    },
+    "ADM1": {
+      "moderate": 0.5314263044733969,
+      "high": 0.5951453409883485,
+      "extreme": 0.6711561284705797
+    },
+    "ADM2": {
+      "moderate": 0.5634497087937126,
+      "high": 0.6496376841478945,
+      "extreme": 0.7318975208025182
+    }
+  },
+  "level_cells": {
+    "ADM0": 33442.0,
+    "ADM1": 3228.0,
+    "ADM2": 188.5
+  },
+  "first_year": 2003,
+  "area_days": 1419769,
+  "flagged": {
+    "moderate": 21297,
+    "high": 5679,
+    "extreme": 1422
+  },
+  "harmonization_model": "hfai-lgbm-5km-20261115-1941"
+}

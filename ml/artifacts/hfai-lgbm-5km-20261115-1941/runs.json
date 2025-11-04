@@ -1,0 +1,136 @@
+[
+  {
+    "run_at": "2026-11-15T19:58:44+00:00",
+    "model_version": "hfai-lgbm-5km-20261115-1941",
+    "first_year": 2001,
+    "last_year": 2025,
+    "cell_days": 28874971,
+    "years": [
+      {
+        "year": 2001,
+        "cell_days": 501576,
+        "est_count": 133161.03125
+      },
+      {
+        "year": 2002,
+        "cell_days": 1043131,
+        "est_count": 411290.75
+      },
+      {
+        "year": 2003,
+        "cell_days": 1183061,
+        "est_count": 514729.375
+      },
+      {
+        "year": 2004,
+        "cell_days": 1079198,
+        "est_count": 436656.125
+      },
+      {
+        "year": 2005,
+        "cell_days": 1386841,
+        "est_count": 530757.25
+      },
+      {
+        "year": 2006,
+        "cell_days": 1104756,
+        "est_count": 489075.5
+      },
+      {
+        "year": 2007,
+        "cell_days": 1238827,
+        "est_count": 545571.25
+      },
+      {
+        "year": 2008,
+        "cell_days": 1367342,
+        "est_count": 636236.0
+      },
+      {
+        "year": 2009,
+        "cell_days": 1121696,
+        "est_count": 477697.9375
+      },
+      {
+        "year": 2010,
+        "cell_days": 1152846,
+        "est_count": 562134.25
+      },
+      {
+        "year": 2011,
+        "cell_days": 1244261,
+        "est_count": 503177.46875
+      },
+      {
+        "year": 2012,
+        "cell_days": 1270918,
+        "est_count": 532942.1875
+      },
+      {
+        "year": 2013,
+        "cell_days": 1193632,
+        "est_count": 537221.75
+      },
+      {
+        "year": 2014,
+        "cell_days": 1265727,
+        "est_count": 554308.25
+      },
+      {
+        "year": 2015,
+        "cell_days": 1320672,
+        "est_count": 554090.9375
+      },
+      {
+        "year": 2016,
+        "cell_days": 1104866,
+        "est_count": 495489.875
+      },
+      {
+        "year": 2017,
+        "cell_days": 1100297,
+        "est_count": 491177.0
+      },
+      {
+        "year": 2018,
+        "cell_days": 1174394,
+        "est_count": 521759.03125
+      },
+      {
+        "year": 2019,
+        "cell_days": 1267198,
+        "est_count": 542793.3125
+      },
+      {
+        "year": 2020,
+        "cell_days": 1091378,
+        "est_count": 427802.84375
+      },
+      {
+        "year": 2021,
+        "cell_days": 1143797,
+        "est_count": 475496.3125
+      },
+      {
+        "year": 2022,
+        "cell_days": 980948,
+        "est_count": 442545.46875
+      },
+      {
+        "year": 2023,
+        "cell_days": 1140822,
+        "est_count": 477208.03125
+      },
+      {
+        "year": 2024,
+        "cell_days": 1304033,
+        "est_count": 532397.1875
+      },
+      {
+        "year": 2025,
+        "cell_days": 1092754,
+        "est_count": 455399.21875
+      }
+    ]
+  }
+]

@@ -1,0 +1,299 @@
+{
+  "version": "hfai-lgbm-5km-20261115-1941",
+  "created_at": "2026-11-15T19:41:53+00:00",
+  "cell_km": 5.0,
+  "grid_crs": "EPSG:6933",
+  "reference_sensor": "viirs_snpp",
+  "country": "Mozambique",
+  "features": [
+    "modis_fire_count",
+    "modis_frp_sum",
+    "modis_frp_mean",
+    "modis_frp_max",
+    "modis_confidence_mean",
+    "modis_brightness_mean",
+    "modis_scan_mean",
+    "modis_day_count",
+    "modis_night_count",
+    "modis_terra_count",
+    "modis_aqua_count",
+    "nbr_fire_count",
+    "nbr_frp_sum",
+    "prev_fire_count",
+    "next_fire_count",
+    "nbr_prev_fire_count",
+    "nbr_next_fire_count",
+    "month",
+    "season",
+    "cell_lat",
+    "cell_lon"
+  ],
+  "split": {
+    "train": [
+      2012,
+      2022
+    ],
+    "validation": [
+      2023,
+      2024
+    ],
+    "test": [
+      2025,
+      2025
+    ]
+  },
+  "rows": {
+    "train_available": 12848114,
+    "train_used": 6000000,
+    "validation": 2281155
+  },
+  "targets": {
+    "count": {
+      "target": "viirs_fire_count",
+      "params": {
+        "learning_rate": 0.08,
+        "feature_fraction": 0.8,
+        "bagging_fraction": 0.7,
+        "bagging_freq": 1,
+        "lambda_l2": 1.0,
+        "max_bin": 127,
+        "metric": "rmse",
+        "verbosity": -1,
+        "seed": 42,
+        "deterministic": true,
+        "force_row_wise": true,
+        "num_threads": 4,
+        "objective": "tweedie",
+        "tweedie_variance_power": 1.3,
+        "num_leaves": 63,
+        "min_data_in_leaf": 200
+      },
+      "best_iteration": 336,
+      "search": [
+        {
+          "params": {
+            "objective": "poisson",
+            "num_leaves": 63,
+            "min_data_in_leaf": 200
+          },
+          "best_iteration": 294,
+          "valid_rmse": 1.286921914758427,
+          "valid_mae": 0.5321907449760999,
+          "valid_bias": -0.0017830568152174472,
+          "seconds": 46.5
+        },
+        {
+          "params": {
+            "objective": "poisson",
+            "num_leaves": 127,
+            "min_data_in_leaf": 100
+          },
+          "best_iteration": 274,
+          "valid_rmse": 1.29048244808753,
+          "valid_mae": 0.531713806441305,
+          "valid_bias": -0.002329356013250924,
+          "seconds": 52.4
+        },
+        {
+          "params": {
+            "objective": "tweedie",
+            "tweedie_variance_power": 1.3,
+            "num_leaves": 63,
+            "min_data_in_leaf": 200
+          },
+          "best_iteration": 204,
+          "valid_rmse": 1.2838199299854287,
+          "valid_mae": 0.5285189062954648,
+          "valid_bias": -0.0058261059801241934,
+          "seconds": 30.7
+        },
+        {
+          "params": {
+            "objective": "regression",
+            "num_leaves": 63,
+            "min_data_in_leaf": 200
+          },
+          "best_iteration": 127,
+          "valid_rmse": 1.2895277980158262,
+          "valid_mae": 0.5352386404868404,
+          "valid_bias": -0.0011860282140938468,
+          "seconds": 23.8
+        }
+      ],
+      "validation": {
+        "n": 2281155,
+        "mae": 0.5283223570463544,
+        "rmse": 1.2803226502155611,
+        "r2": 0.3206300373463148,
+        "bias": -0.004255177627356206,
+        "bias_pct": -1.0079165026594465,
+        "spearman": 0.345257520996805,
+        "mean_observed": 0.4221756084088981,
+        "mean_predicted": 0.41792043078154195
+      },
+      "feature_importance_gain": {
+        "modis_fire_count": 2674125.293654442,
+        "modis_frp_sum": 6632573.366391182,
+        "modis_frp_mean": 5700132.975921631,
+        "modis_frp_max": 1179371.7465672493,
+        "modis_confidence_mean": 60445.262236595154,
+        "modis_brightness_mean": 78017.02271652222,
+        "modis_scan_mean": 539212.3645763397,
+        "modis_day_count": 44285.74762630463,
+        "modis_night_count": 86990.96271896362,
+        "modis_terra_count": 25802.408548355103,
+        "modis_aqua_count": 74251.45048618317,
+        "nbr_fire_count": 451309.9728651047,
+        "nbr_frp_sum": 1107009.8987150192,
+        "prev_fire_count": 746871.7793979645,
+        "next_fire_count": 1076380.8283128738,
+        "nbr_prev_fire_count": 867743.4719991684,
+        "nbr_next_fire_count": 727585.4016008377,
+        "month": 571428.1581754684,
+        "season": 90593.28810310364,
+        "cell_lat": 778528.2368650436,
+        "cell_lon": 472263.3491835594
+      },
+      "linear_baseline": {
+        "intercept": -0.021005936041180617,
+        "coefficients": {
+          "modis_fire_count": 1.5873689420956596,
+          "nbr_fire_count": 0.10123184141849412,
+          "prev_fire_count": 0.2074985324557402,
+          "next_fire_count": 0.26330202997164986,
+          "nbr_prev_fire_count": 0.06744733665708205,
+          "nbr_next_fire_count": 0.07067499681945254
+        }
+      }
+    },
+    "frp": {
+      "target": "viirs_frp_sum",
+      "params": {
+        "learning_rate": 0.08,
+        "feature_fraction": 0.8,
+        "bagging_fraction": 0.7,
+        "bagging_freq": 1,
+        "lambda_l2": 1.0,
+        "max_bin": 127,
+        "metric": "rmse",
+        "verbosity": -1,
+        "seed": 42,
+        "deterministic": true,
+        "force_row_wise": true,
+        "num_threads": 4,
+        "objective": "tweedie",
+        "tweedie_variance_power": 1.5,
+        "num_leaves": 63,
+        "min_data_in_leaf": 200
+      },
+      "best_iteration": 176,
+      "search": [
+        {
+          "params": {
+            "objective": "tweedie",
+            "tweedie_variance_power": 1.5,
+            "num_leaves": 63,
+            "min_data_in_leaf": 200
+          },
+          "best_iteration": 115,
+          "valid_rmse": 18.55885695665857,
+          "valid_mae": 5.078219960996599,
+          "valid_bias": 0.00705543077217015,
+          "seconds": 21.7
+        },
+        {
+          "params": {
+            "objective": "poisson",
+            "num_leaves": 63,
+            "min_data_in_leaf": 200
+          },
+          "best_iteration": 93,
+          "valid_rmse": 18.652263920114386,
+          "valid_mae": 5.184784381911958,
+          "valid_bias": 0.10018174799120126,
+          "seconds": 19.1
+        },
+        {
+          "params": {
+            "objective": "regression",
+            "num_leaves": 63,
+            "min_data_in_leaf": 200
+          },
+          "best_iteration": 65,
+          "valid_rmse": 18.614791777302752,
+          "valid_mae": 5.17654853335181,
+          "valid_bias": 0.09300352049870277,
+          "seconds": 13.3
+        }
+      ],
+      "validation": {
+        "n": 2281155,
+        "mae": 5.081794115685521,
+        "rmse": 18.507452777034512,
+        "r2": 0.2776127047867929,
+        "bias": 0.029431191044464462,
+        "bias_pct": 0.7434797457793831,
+        "spearman": 0.34063809607820766,
+        "mean_observed": 3.958573345345408,
+        "mean_predicted": 3.988004536389872
+      },
+      "feature_importance_gain": {
+        "modis_fire_count": 1679865.2530822754,
+        "modis_frp_sum": 34811289.03942108,
+        "modis_frp_mean": 26899718.26210022,
+        "modis_frp_max": 2343636.558921814,
+        "modis_confidence_mean": 263256.8869628906,
+        "modis_brightness_mean": 8124989.09418869,
+        "modis_scan_mean": 184701.2758026123,
+        "modis_day_count": 80930.48580169678,
+        "modis_night_count": 74618.61155700684,
+        "modis_terra_count": 57837.82342529297,
+        "modis_aqua_count": 549077.5738296509,
+        "nbr_fire_count": 1425512.8527030945,
+        "nbr_frp_sum": 5594543.36706543,
+        "prev_fire_count": 2736988.318664551,
+        "next_fire_count": 3296010.3091278076,
+        "nbr_prev_fire_count": 4139380.7249832153,
+        "nbr_next_fire_count": 3914080.3522491455,
+        "month": 2646642.2392196655,
+        "season": 392773.09925079346,
+        "cell_lat": 3020993.2767181396,
+        "cell_lon": 2076964.355293274
+      },
+      "linear_baseline": {
+        "intercept": 1.2747822526260508,
+        "coefficients": {
+          "modis_frp_sum": 0.25955640768155575,
+          "nbr_frp_sum": 0.01514126359736434,
+          "modis_fire_count": 9.45886013952734,
+          "nbr_fire_count": 0.42298939339007646
+        }
+      }
+    }
+  },
+  "hfai": {
+    "count_ref": 2.409775726784214,
+    "frp_ref": 22.207128524780273,
+    "weight_count": 0.5,
+    "weight_frp": 0.5,
+    "reference_years": [
+      2012,
+      2022
+    ]
+  },
+  "background": {
+    "block_cells": 5,
+    "fitted_on": [
+      2012,
+      2022
+    ],
+    "residual_viirs_detections": 1643666.0
+  },
+  "data_fingerprint": "9677002996490d2c",
+  "libraries": {
+    "lightgbm": "4.7.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1"
+  },
+  "seed": 42
+}

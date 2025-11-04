@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ml/data:/app/ml/data
+      - ./ml/artifacts:/app/ml/artifacts
+
+  pipeline:
+    build: .
+    profiles: ["pipeline"]
+    command: python -m scripts.run_pipeline
+    volumes:
+      - ./ml/data:/app/ml/data
+      - ./ml/artifacts:/app/ml/artifacts
+      - ./docs:/app/docs

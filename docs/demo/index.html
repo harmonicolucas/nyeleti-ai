@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NYELETI AI — Project Demo | NASA Space Apps 2026</title>
+<style>
+  :root { --bg:#0f1419; --panel:#1a222c; --text:#f2f4f7; --muted:#9aa7b5; --accent:#f07a28; --line:#2a3542; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: #000; color: var(--text); }
+  .deck { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  .slide { display: none; min-height: 620px; background: linear-gradient(160deg, #121820, #1c2733 55%, #152018);
+    border: 1px solid var(--line); border-radius: 14px; padding: 36px 44px; position: relative; overflow: hidden; }
+  .slide.active { display: block; }
+  .slide::before { content: ""; position: absolute; inset: auto -20% -30% 40%; height: 70%; background: radial-gradient(circle, rgba(240,122,40,.18), transparent 60%); }
+  h1 { font-size: 42px; margin: 0 0 12px; letter-spacing: .02em; }
+  h2 { font-size: 30px; margin: 0 0 18px; color: var(--accent); }
+  p, li { font-size: 20px; line-height: 1.45; color: var(--text); }
+  .muted { color: var(--muted); font-size: 16px; }
+  .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: start; }
+  .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kpi { background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .kpi b { display: block; font-size: 26px; color: var(--accent); }
+  img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line); background: #000; }
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; gap: 12px; }
+  .nav button { background: var(--accent); color: #111; border: 0; border-radius: 999px; padding: 10px 18px; font-weight: 700; cursor: pointer; }
+  .nav button.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .badge { display: inline-block; background: rgba(240,122,40,.15); color: var(--accent); border: 1px solid rgba(240,122,40,.4);
+    border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; }
+  th { color: var(--muted); font-weight: 600; }
+  .footer { position: absolute; left: 44px; right: 44px; bottom: 22px; display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; }
+  ul { margin: 8px 0 0; padding-left: 22px; }
+  .team { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="deck">
+  <section class="slide active" id="s1">
+    <div class="badge">NASA Space Apps Challenge 2026 · Maputo</div>
+    <h1>NYELETI AI</h1>
+    <p>MODIS–VIIRS Fire Data Harmonization and Burning Activity Calendar</p>
+    <p class="muted">Challenge 09 — Harmonization of MODIS and VIIRS Hot Spots</p>
+    <p style="margin-top:28px">Team <b>NYELETI</b> · Case study: Mozambique · Record: 2001–2025</p>
+    <div class="footer"><span>1 / 7</span><span>Built on NASA FIRMS active fire data</span></div>
+  </section>
+
+  <section class="slide" id="s2">
+    <h2>The problem</h2>
+    <div class="grid">
+      <div>
+        <p>Satellites have tracked active fires for more than two decades, but the record is split across sensors that cannot be compared directly.</p>
+        <ul>
+          <li>MODIS (1 km): long record from 2001</li>
+          <li>VIIRS (375 m): denser record from 2012</li>
+          <li>Over Mozambique, VIIRS reports ~5× more detections than MODIS</li>
+        </ul>
+        <p class="muted">Fire managers need one consistent calendar of when and where burning has occurred.</p>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>~5×</b>VIIRS vs MODIS detections</div>
+        <div class="kpi"><b>25 years</b>to put on one scale</div>
+        <div class="kpi"><b>3 sensors</b>MODIS · S-NPP · NOAA-20</div>
+        <div class="kpi"><b>5 km</b>equal-area analysis grid</div>
+      </div>
+    </div>
+    <div class="footer"><span>2 / 7</span><span>Challenge: Harmonization of MODIS and VIIRS Hot Spots</span></div>
+  </section>
+
+  <section class="slide" id="s3">
+    <h2>Our solution</h2>
+    <p>A web application that learns the MODIS→VIIRS relationship and rebuilds a single burning-activity calendar.</p>
+    <ul>
+      <li><b>LightGBM</b> estimates VIIRS-scale detections and FRP from MODIS cell-days</li>
+      <li><b>Background rate</b> accounts for fires only VIIRS can see</li>
+      <li><b>HFAI</b> combines count and FRP into one activity index</li>
+      <li><b>Isolation Forest</b> flags unusual past periods (not forecasts)</li>
+      <li>Map, calendar, anomalies, critical periods, PDF/CSV/GeoJSON exports</li>
+    </ul>
+    <p class="muted">Original NASA detections are never overwritten. Observed and estimated values stay in separate columns.</p>
+    <div class="footer"><span>3 / 7</span><span>NYELETI AI</span></div>
+  </section>
+
+  <section class="slide" id="s4">
+    <h2>NASA data used</h2>
+    <table>
+      <tr><th>Product</th><th>Sensor</th><th>Years</th><th>Role</th></tr>
+      <tr><td>MCD14ML C6.1</td><td>MODIS Terra/Aqua</td><td>2001–2025</td><td>Model input</td></tr>
+      <tr><td>VNP14IMGTML</td><td>VIIRS S-NPP</td><td>2012–2025</td><td>Reference / training target</td></tr>
+      <tr><td>VJ114IMGTML</td><td>VIIRS NOAA-20</td><td>2020–2025</td><td>Map + evaluation ceiling</td></tr>
+      <tr><td>NASA GIBS</td><td>Blue Marble / true colour</td><td>—</td><td>Base maps</td></tr>
+    </table>
+    <p class="muted" style="margin-top:16px">Source: FIRMS country yearly archive (standard processing). No synthetic fire data.</p>
+    <div class="footer"><span>4 / 7</span><span>earthdata.nasa.gov/firms · gibs.earthdata.nasa.gov</span></div>
+  </section>
+
+  <section class="slide" id="s5">
+    <h2>Results (independent test year 2025)</h2>
+    <div class="grid">
+      <div>
+        <img src="../figures/harmonization_before_after.png" alt="Before and after harmonization" />
+      </div>
+      <div>
+        <p>HFAI by province and day:</p>
+        <table>
+          <tr><th>Method</th><th>RMSE</th><th>R²</th></tr>
+          <tr><td>Original MODIS</td><td>122.6</td><td>0.57</td></tr>
+          <tr><td>Linear regression</td><td>79.7</td><td>0.82</td></tr>
+          <tr><td><b>LightGBM + bg</b></td><td><b>65.0</b></td><td><b>0.88</b></td></tr>
+        </table>
+        <p class="muted">National 2025: MODIS 122k · VIIRS 610k · harmonized 602k (98.7% of VIIRS).</p>
+      </div>
+    </div>
+    <div class="footer"><span>5 / 7</span><span>Held-out test year never used in training</span></div>
+  </section>
+
+  <section class="slide" id="s6">
+    <h2>What users get</h2>
+    <div class="grid">
+      <ul>
+        <li>Dashboard of national and local activity</li>
+        <li>Map with detections, harmonized grid, drawn AOIs</li>
+        <li>Burning calendar (day / month / season / year)</li>
+        <li>Harmonization engine with metrics and baselines</li>
+        <li>Anomalies and critical burning periods</li>
+        <li>Reports: PDF, CSV series, GeoJSON grid</li>
+        <li>Interface in English and Portuguese</li>
+      </ul>
+      <div>
+        <img src="../figures/calendar_province.png" alt="Zambezia burning calendar" />
+        <p class="muted">Example: monthly calendar for Zambézia province.</p>
+      </div>
+    </div>
+    <div class="footer"><span>6 / 7</span><span>Run locally: README · uvicorn on port 8000</span></div>
+  </section>
+
+  <section class="slide" id="s7">
+    <h2>Impact and next steps</h2>
+    <ul>
+      <li>Gives responders and land managers one continuous fire-activity record</li>
+      <li>Makes pre-2012 years comparable to the VIIRS era (labelled as estimates)</li>
+      <li>Architecture is country-keyed: other regions need data + retrain</li>
+    </ul>
+    <p><b>Known limits:</b> weak at single cell-day scale; MODIS gaps pass into the series; anomalies are retrospective, not forecasts.</p>
+    <div class="team">
+      <div class="kpi"><b>Team NYELETI</b>Maputo Local Event</div>
+      <div class="kpi"><b>Repo + docs</b>github.com/harmonicolucas/nyeleti-ai</div>
+    </div>
+    <div class="footer"><span>7 / 7</span><span>Thank you · NASA Space Apps Challenge 2026</span></div>
+  </section>
+
+  <div class="nav">
+    <button class="ghost" id="prev">Previous</button>
+    <span class="muted" id="counter">1 / 7</span>
+    <button id="next">Next</button>
+  </div>
+</div>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.getElementById('counter').textContent = `${i + 1} / ${slides.length}`;
+  }
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') show(i + 1);
+    if (e.key === 'ArrowLeft') show(i - 1);
+  });
+</script>
+</body>
+</html>

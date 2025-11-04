@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Data and database: rebuilt by the pipeline from NASA FIRMS
+ml/data/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Local
+.env
+.vscode/
+.idea/
+*.log
+# Extra ignores for the public GitHub mirror
+ml/artifacts/hfai-lgbm-1km-resolution-test/
+ml/artifacts/hfai-lgbm-10km-resolution-test/
