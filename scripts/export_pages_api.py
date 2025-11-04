@@ -32,18 +32,20 @@ def save(path: str, params: dict | None = None) -> Path:
     dest = OUT / key(path, params)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"  {dest.name}  ({dest.stat().st_size // 1024} KB)")
+    print(f"  {dest.relative_to(OUT)}  ({dest.stat().st_size // 1024} KB)")
     return dest
 
 
 def main() -> None:
     if OUT.exists():
-        for old in OUT.glob("*.json"):
+        for old in OUT.rglob("*.json"):
             old.unlink()
     OUT.mkdir(parents=True, exist_ok=True)
 
     meta = fetch("/api/meta")
-    year = int(str(meta["record"]["last_day"])[:4])
+    first_year = int(str(meta["record"]["first_day"])[:4])
+    last_year = int(str(meta["record"]["last_day"])[:4])
+    years = list(range(first_year, last_year + 1))
     iso3 = meta["iso3"]
     viirs_year = str(meta["record"]["viirs_start"])[:4]
     test = meta["split"]["test"]
@@ -51,9 +53,9 @@ def main() -> None:
     months = trends["climatology"]["months"]
     peak = trends["climatology"]["peak_month"]
     month = f"{months.index(peak) + 1:02d}"
-    map_start = f"{year}-{month}-01"
-    map_end = f"{year}-{month}-07"
-    print(f"Exporting static API for {iso3}, year {year}, map {map_start}→{map_end}")
+    map_start = f"{last_year}-{month}-01"
+    map_end = f"{last_year}-{month}-07"
+    print(f"Exporting static API for {iso3}, years {first_year}-{last_year}, map {map_start}->{map_end}")
 
     save("/api/meta")
     save("/api/health")
@@ -64,15 +66,9 @@ def main() -> None:
     save("/api/model/metrics")
 
     for metric in ("hfai", "count", "frp"):
-        save("/api/dashboard", {"area_id": iso3, "year": year})
         save("/api/calendar", {"area_id": iso3, "granularity": "year", "metric": metric})
         save("/api/calendar", {"area_id": iso3, "granularity": "month", "metric": metric})
         save("/api/calendar", {"area_id": iso3, "granularity": "season", "metric": metric})
-        save("/api/calendar", {"area_id": iso3, "granularity": "day", "metric": metric, "year": year})
-        save("/api/harmonization", {
-            "area_id": iso3, "metric": metric, "freq": "month",
-            "start": f"{year}-01-01", "end": f"{year}-12-31",
-        })
         save("/api/harmonization", {"area_id": iso3, "metric": metric, "freq": "month", "start": f"{viirs_year}-01-01"})
         save("/api/harmonization", {"area_id": iso3, "metric": metric, "freq": "year", "start": f"{viirs_year}-01-01"})
         save("/api/harmonization", {"area_id": iso3, "metric": metric, "freq": "day", "start": f"{viirs_year}-01-01"})
@@ -86,20 +82,29 @@ def main() -> None:
             "min_days": 3, "max_gap": 1, "basis": "area",
         })
 
-    # dashboard is independent of metric - saved once above; keep one call only next time
+    # Full year coverage for national views (dashboard / day calendar / monthly window).
+    for year in years:
+        save("/api/dashboard", {"area_id": iso3, "year": year})
+        for metric in ("hfai", "count", "frp"):
+            save("/api/calendar", {"area_id": iso3, "granularity": "day", "metric": metric, "year": year})
+            save("/api/harmonization", {
+                "area_id": iso3, "metric": metric, "freq": "month",
+                "start": f"{year}-01-01", "end": f"{year}-12-31",
+            })
+        if year >= int(viirs_year):
+            save("/api/anomalies/series", {"area_id": iso3, "year": year})
+            save("/api/anomalies", {
+                "area_id": iso3, "start": f"{year}-01-01", "end": f"{year}-12-31",
+                "direction": "above", "min_severity": "moderate", "limit": 60,
+            })
+
     save("/api/critical/regions", {"level": "ADM1"})
     save("/api/critical/regions", {"level": "ADM2"})
-
     save("/api/anomalies", {
         "area_id": iso3, "direction": "above", "min_severity": "moderate", "limit": 60,
     })
-    save("/api/anomalies", {
-        "area_id": iso3, "start": f"{year}-01-01", "end": f"{year}-12-31",
-        "direction": "above", "min_severity": "moderate", "limit": 60,
-    })
-    save("/api/anomalies/series", {"area_id": iso3, "year": year})
     save("/api/anomalies/overview", {
-        "level": "ADM1", "start": f"{year}-01-01", "end": f"{year}-12-31", "direction": "above",
+        "level": "ADM1", "start": f"{last_year}-01-01", "end": f"{last_year}-12-31", "direction": "above",
     })
 
     save("/api/fires", {
@@ -107,9 +112,10 @@ def main() -> None:
         "sensors": "modis,viirs_snpp", "min_confidence": "low", "limit": 25000,
     })
     for metric in ("hfai", "count", "frp"):
+        mins = {"hfai": 0.1, "count": 0.2, "frp": 5}[metric]
         save("/api/harmonization/grid", {
             "area_id": iso3, "start": map_start, "end": map_end,
-            "layer": "harmonized", "metric": metric, "min_value": 0.1 if metric == "hfai" else (0.2 if metric == "count" else 5),
+            "layer": "harmonized", "metric": metric, "min_value": mins,
         })
         save("/api/harmonization/grid", {
             "area_id": iso3, "start": map_start, "end": map_end,
@@ -121,26 +127,29 @@ def main() -> None:
         })
 
     areas = fetch("/api/areas")["areas"]
-    provinces = [a for a in areas if a.get("level") == "ADM1"][:4]
+    provinces = [a for a in areas if a.get("level") == "ADM1"]
     for prov in provinces:
         aid = prov["area_id"]
         save("/api/areas/resolve", {"area_id": aid})
-        save("/api/dashboard", {"area_id": aid, "year": year})
-        save("/api/calendar", {"area_id": aid, "granularity": "day", "metric": "hfai", "year": year})
+        save("/api/areas/geojson", {"level": "ADM2", "parent_id": aid})
         save("/api/calendar", {"area_id": aid, "granularity": "year", "metric": "hfai"})
         save("/api/calendar", {"area_id": aid, "granularity": "month", "metric": "hfai"})
-        save("/api/harmonization", {
-            "area_id": aid, "metric": "hfai", "freq": "month",
-            "start": f"{year}-01-01", "end": f"{year}-12-31",
-        })
-        save("/api/areas/geojson", {"level": "ADM2", "parent_id": aid})
         save("/api/trends", {"area_id": aid, "metric": "hfai"})
         save("/api/anomalies", {
             "area_id": aid, "direction": "above", "min_severity": "moderate", "limit": 60,
         })
-        save("/api/anomalies/series", {"area_id": aid, "year": year})
+        for year in years:
+            save("/api/dashboard", {"area_id": aid, "year": year})
+            save("/api/calendar", {"area_id": aid, "granularity": "day", "metric": "hfai", "year": year})
+            save("/api/harmonization", {
+                "area_id": aid, "metric": "hfai", "freq": "month",
+                "start": f"{year}-01-01", "end": f"{year}-12-31",
+            })
+            if year >= int(viirs_year):
+                save("/api/anomalies/series", {"area_id": aid, "year": year})
 
-    print(f"Done → {OUT} ({sum(p.stat().st_size for p in OUT.glob('*.json')) // 1024} KB total)")
+    total = sum(p.stat().st_size for p in OUT.rglob("*.json"))
+    print(f"Done -> {OUT} ({total // (1024 * 1024)} MB, {sum(1 for _ in OUT.rglob('*.json'))} files)")
 
 
 if __name__ == "__main__":

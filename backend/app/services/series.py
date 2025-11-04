@@ -126,6 +126,11 @@ def values(series, digits: int = 3) -> list:
 def number(value, digits: int = 3):
     if value is None:
         return None
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
     value = float(value)
     return None if np.isnan(value) or np.isinf(value) else round(value, digits)
 
