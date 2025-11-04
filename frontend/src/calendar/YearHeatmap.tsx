@@ -61,7 +61,7 @@ export function YearHeatmap({ dates, values, classes, flagged, selected, unit, o
               y={TOP + c.weekday * CELL}
               width={CELL - 1}
               height={CELL - 1}
-              fill={cls ? FILL[cls] : "#1d1a18"}
+              fill={cls ? FILL[cls] : "#e8edf3"}
               onClick={() => onPick?.(c.date)}
             >
               <title>{`${c.date}: ${value === null ? t("noRecord") : `${value.toLocaleString("en-US", { maximumFractionDigits: 1 })} ${unit}`}`}</title>

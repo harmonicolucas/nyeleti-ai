@@ -5,27 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NYELETI AI — Project Demo | NASA Space Apps 2026</title>
 <style>
-  :root { --bg:#0f1419; --panel:#1a222c; --text:#f2f4f7; --muted:#9aa7b5; --accent:#f07a28; --line:#2a3542; }
+  :root {
+    --bg: #eef1f5;
+    --panel: #ffffff;
+    --text: #1a2332;
+    --muted: #5b6778;
+    --accent: #1f6b5c;
+    --line: #d5dbe3;
+  }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: #000; color: var(--text); }
+  body { margin: 0; font-family: "Segoe UI", "IBM Plex Sans", system-ui, sans-serif; background: #dfe4eb; color: var(--text); }
   .deck { max-width: 1100px; margin: 0 auto; padding: 16px; }
-  .slide { display: none; min-height: 620px; background: linear-gradient(160deg, #121820, #1c2733 55%, #152018);
-    border: 1px solid var(--line); border-radius: 14px; padding: 36px 44px; position: relative; overflow: hidden; }
+  .slide {
+    display: none; min-height: 620px;
+    background: linear-gradient(165deg, #ffffff 0%, #f5f7fa 70%, #eef6f4 100%);
+    border: 1px solid var(--line); border-radius: 14px; padding: 36px 44px; position: relative; overflow: hidden;
+    box-shadow: 0 10px 28px rgba(26, 35, 50, 0.06);
+  }
   .slide.active { display: block; }
-  .slide::before { content: ""; position: absolute; inset: auto -20% -30% 40%; height: 70%; background: radial-gradient(circle, rgba(240,122,40,.18), transparent 60%); }
-  h1 { font-size: 42px; margin: 0 0 12px; letter-spacing: .02em; }
-  h2 { font-size: 30px; margin: 0 0 18px; color: var(--accent); }
+  h1 { font-size: 42px; margin: 0 0 12px; letter-spacing: .02em; color: var(--text); }
+  h2 { font-size: 30px; margin: 0 0 18px; color: var(--text); }
   p, li { font-size: 20px; line-height: 1.45; color: var(--text); }
   .muted { color: var(--muted); font-size: 16px; }
   .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: start; }
   .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .kpi { background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .kpi { background: #f3f5f8; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
   .kpi b { display: block; font-size: 26px; color: var(--accent); }
-  img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line); background: #000; }
+  img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line); background: #fff; }
   .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; gap: 12px; }
-  .nav button { background: var(--accent); color: #111; border: 0; border-radius: 999px; padding: 10px 18px; font-weight: 700; cursor: pointer; }
+  .nav button { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 10px 18px; font-weight: 700; cursor: pointer; }
   .nav button.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
-  .badge { display: inline-block; background: rgba(240,122,40,.15); color: var(--accent); border: 1px solid rgba(240,122,40,.4);
+  .nav button:disabled { opacity: 0.45; cursor: default; }
+  .badge { display: inline-block; background: #e8f3f0; color: var(--accent); border: 1px solid #b7d8d0;
     border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
   table { width: 100%; border-collapse: collapse; font-size: 16px; }
   th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; }
@@ -158,18 +169,32 @@
 </div>
 <script>
   const slides = [...document.querySelectorAll('.slide')];
+  const PLATFORM_URL = 'http://localhost:8000/';
   let i = 0;
   function show(n) {
     i = Math.max(0, Math.min(slides.length - 1, n));
     slides.forEach((s, k) => s.classList.toggle('active', k === i));
     document.getElementById('counter').textContent = `${i + 1} / ${slides.length}`;
+    const next = document.getElementById('next');
+    next.textContent = i === slides.length - 1 ? 'Open platform' : 'Next';
   }
   document.getElementById('prev').onclick = () => show(i - 1);
-  document.getElementById('next').onclick = () => show(i + 1);
+  document.getElementById('next').onclick = () => {
+    if (i === slides.length - 1) {
+      window.open(PLATFORM_URL, '_blank', 'noopener');
+      return;
+    }
+    show(i + 1);
+  };
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ') show(i + 1);
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      if (i === slides.length - 1) window.open(PLATFORM_URL, '_blank', 'noopener');
+      else show(i + 1);
+    }
     if (e.key === 'ArrowLeft') show(i - 1);
   });
+  show(0);
 </script>
 </body>
 </html>

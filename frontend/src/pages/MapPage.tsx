@@ -29,9 +29,9 @@ interface TrendsLite {
 type GridLayer = "none" | "harmonized" | "modis" | "viirs";
 
 const SENSORS = [
-  { id: "modis", label: "MODIS (Terra, Aqua)", color: "#58a6ff", radius: 4.2 },
-  { id: "viirs_snpp", label: "VIIRS S-NPP", color: "#34d3b4", radius: 2.6 },
-  { id: "viirs_noaa20", label: "VIIRS NOAA-20", color: "#e879f9", radius: 2.6 },
+  { id: "modis", label: "MODIS (Terra, Aqua)", color: "#2563eb", radius: 4.2 },
+  { id: "viirs_snpp", label: "VIIRS S-NPP", color: "#0d9488", radius: 2.6 },
+  { id: "viirs_noaa20", label: "VIIRS NOAA-20", color: "#7c3aed", radius: 2.6 },
 ] as const;
 
 // harmonized cells below these totals are left out of the map layer
@@ -61,14 +61,14 @@ const STYLE: maplibregl.StyleSpecification = {
     },
   },
   layers: [
-    { id: "background", type: "background", paint: { "background-color": "#0a0908" } },
+    { id: "background", type: "background", paint: { "background-color": "#dbe3ec" } },
     {
       id: "base-bluemarble", type: "raster", source: "bluemarble",
-      paint: { "raster-brightness-max": 0.5, "raster-saturation": -0.45, "raster-contrast": 0.1 },
+      paint: { "raster-brightness-max": 0.92, "raster-saturation": -0.15, "raster-contrast": 0.05 },
     },
     {
       id: "base-osm", type: "raster", source: "osm", layout: { visibility: "none" },
-      paint: { "raster-brightness-max": 0.55, "raster-saturation": -0.7 },
+      paint: { "raster-brightness-max": 1, "raster-saturation": -0.2 },
     },
   ],
 };
@@ -171,7 +171,7 @@ export function MapPage() {
       map.addLayer({
         id: "grid", type: "fill", source: "grid",
         paint: {
-          "fill-color": ["interpolate", ["linear"], ["get", "n"], 0, "#3b1d0a", 0.35, "#b45309", 0.7, "#f59e0b", 1, "#fde68a"],
+          "fill-color": ["interpolate", ["linear"], ["get", "n"], 0, "#fee2e2", 0.35, "#fb923c", 0.7, "#ea580c", 1, "#9a3412"],
           "fill-opacity": 0.72,
         },
       });
@@ -179,7 +179,7 @@ export function MapPage() {
       map.addLayer({ id: "provinces-line", type: "line", source: "provinces", paint: { "line-color": "#8a7f76", "line-width": 1 } });
       map.addLayer({ id: "districts-fill", type: "fill", source: "districts", paint: { "fill-color": "#ffffff", "fill-opacity": 0 } });
       map.addLayer({ id: "districts-line", type: "line", source: "districts", paint: { "line-color": "#6f665e", "line-width": 0.7, "line-dasharray": [2, 2] } });
-      map.addLayer({ id: "selection-line", type: "line", source: "selection", paint: { "line-color": "#f59e0b", "line-width": 2.2 } });
+      map.addLayer({ id: "selection-line", type: "line", source: "selection", paint: { "line-color": "#1f6b5c", "line-width": 2.2 } });
       for (const s of SENSORS) {
         map.addLayer({
           id: `fires-${s.id}`, type: "circle", source: "fires", filter: ["==", ["get", "sensor"], s.id],
@@ -187,14 +187,14 @@ export function MapPage() {
             "circle-color": s.color,
             "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, s.radius * 0.55, 8, s.radius, 12, s.radius * 2.2],
             "circle-opacity": 0.85,
-            "circle-stroke-color": "#0b0a09",
+            "circle-stroke-color": "#ffffff",
             "circle-stroke-width": s.id === "modis" ? 0.8 : 0.3,
           },
         });
       }
-      map.addLayer({ id: "draw-fill", type: "fill", source: "draw", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": "#f59e0b", "fill-opacity": 0.12 } });
-      map.addLayer({ id: "draw-line", type: "line", source: "draw", paint: { "line-color": "#f59e0b", "line-width": 2, "line-dasharray": [2, 1] } });
-      map.addLayer({ id: "draw-points", type: "circle", source: "draw", filter: ["==", ["geometry-type"], "Point"], paint: { "circle-color": "#f59e0b", "circle-radius": 4 } });
+      map.addLayer({ id: "draw-fill", type: "fill", source: "draw", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": "#1f6b5c", "fill-opacity": 0.12 } });
+      map.addLayer({ id: "draw-line", type: "line", source: "draw", paint: { "line-color": "#1f6b5c", "line-width": 2, "line-dasharray": [2, 1] } });
+      map.addLayer({ id: "draw-points", type: "circle", source: "draw", filter: ["==", ["geometry-type"], "Point"], paint: { "circle-color": "#1f6b5c", "circle-radius": 4 } });
       setReady(true);
     });
 

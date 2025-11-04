@@ -2,25 +2,25 @@ import Plotly from "plotly.js-dist-min";
 import { useEffect, useRef } from "react";
 
 export const COLORS = {
-  modis: "#58a6ff",
-  viirs: "#34d3b4",
-  harmonized: "#fb7a1e",
-  muted: "#a69c93",
-  grid: "#2c2622",
-  accent: "#f59e0b",
-  danger: "#ef4444",
+  modis: "#2563eb",
+  viirs: "#0d9488",
+  harmonized: "#c2410c",
+  muted: "#5b6778",
+  grid: "#d5dbe3",
+  accent: "#1f6b5c",
+  danger: "#dc2626",
 };
 
 const BASE_LAYOUT = {
   paper_bgcolor: "rgba(0,0,0,0)",
   plot_bgcolor: "rgba(0,0,0,0)",
-  font: { color: "#d9d0c7", size: 11.5, family: "Inter, Segoe UI, system-ui, sans-serif" },
+  font: { color: "#334155", size: 11.5, family: "Segoe UI, IBM Plex Sans, system-ui, sans-serif" },
   margin: { l: 52, r: 16, t: 10, b: 36 },
   hovermode: "x unified",
-  hoverlabel: { bgcolor: "#221e1b", bordercolor: "#3a332d", font: { color: "#f4eee8" } },
+  hoverlabel: { bgcolor: "#ffffff", bordercolor: "#d5dbe3", font: { color: "#1a2332" } },
   legend: { orientation: "h", y: 1.12, x: 0, font: { size: 11 } },
   xaxis: { gridcolor: COLORS.grid, zerolinecolor: COLORS.grid, linecolor: COLORS.grid },
-  yaxis: { gridcolor: COLORS.grid, zerolinecolor: "#4a423b", linecolor: COLORS.grid, rangemode: "tozero" },
+  yaxis: { gridcolor: COLORS.grid, zerolinecolor: "#cbd5e1", linecolor: COLORS.grid, rangemode: "tozero" },
 };
 
 function isPlain(value: unknown): value is Record<string, unknown> {

@@ -88,7 +88,7 @@ export function AnomaliesPage() {
       out.push({
         x: idx.map((i) => d.dates[i]), y: idx.map((i) => d.hfai_7d[i]), name: t(`sev.${name}`),
         type: "scatter", mode: "markers",
-        marker: { color: SEVERITY_COLORS[name], size: 8, line: { color: "#0b0a09", width: 1 },
+        marker: { color: SEVERITY_COLORS[name], size: 8, line: { color: "#ffffff", width: 1 },
           symbol: idx.map((i) => (d.direction[i] === "above" ? "triangle-up" : "triangle-down")) },
       });
     }
