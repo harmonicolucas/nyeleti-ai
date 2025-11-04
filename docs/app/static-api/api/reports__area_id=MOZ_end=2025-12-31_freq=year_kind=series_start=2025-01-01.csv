@@ -1,0 +1,2 @@
+period,modis_detections_observed,modis_frp_mw_observed,viirs_snpp_detections_observed,viirs_snpp_frp_mw_observed,harmonized_detections_estimate,harmonized_frp_mw_estimate,hfai_modis_observed,hfai_viirs_snpp_observed,hfai_harmonized_estimate,area,model_version
+2025,123352.0,3573906.97,609745.0,5400404.05,606238.71,5391492.3,106061.645,248106.564,247178.399,Mozambique,hfai-lgbm-5km-20261115-1941

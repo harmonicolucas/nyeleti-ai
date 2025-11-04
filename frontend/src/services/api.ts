@@ -61,7 +61,12 @@ function staticApiPath(path: string, params: Params = {}): string {
   const query = items.map(([key, value]) => `${key}=${value}`).join("&");
   const raw = `${path.replace(/^\//, "")}${query ? `__${query}` : ""}`;
   const safe = raw.replace(/[^\w.=\/-]+/g, "_");
-  return `${import.meta.env.BASE_URL}static-api/${safe}.json`;
+  let ext = ".json";
+  if (path === "/api/reports") {
+    const kind = String(params.kind ?? "pdf");
+    ext = kind === "pdf" ? ".pdf" : kind === "grid" ? ".geojson" : ".csv";
+  }
+  return `${import.meta.env.BASE_URL}static-api/${safe}${ext}`;
 }
 
 export function buildUrl(path: string, params: Params = {}): string {
